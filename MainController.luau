@@ -143,7 +143,7 @@ function MainController:enemy()
 
 	table.insert(self.queue, {
 		key = random_key,
-		stats = deep_copy(selected.Stats),
+		stats = deep_copy(selected.Stats)
 	})
 
 	if not self.spawning then
@@ -160,7 +160,7 @@ function MainController:enemy()
 				self.enemies[id] = {
 					key = data.key,
 					spawn_time = unix_milis,
-					stats = data.stats,
+					stats = data.stats
 				}
 
 				local position = checkpoints[1].Position
@@ -176,7 +176,7 @@ function MainController:enemy()
 					position = {
 						position.X,
 						position.Y,
-						position.Z,
+						position.Z
 					}
 				})
 			end
@@ -199,7 +199,7 @@ function MainController:tower(position, tower_key)
 		position = position,
 		stats = stats,
 		in_range = {},
-		target = nil,
+		target = nil
 	}
 
 	Bridge:Fire(BridgeNet2.AllPlayers(), {
@@ -210,12 +210,12 @@ function MainController:tower(position, tower_key)
 		position = {
 			position.X,
 			position.Y,
-			position.Z,
+			position.Z
 		},
 
 		damage = stats.Damage,
 		range = stats.Range,
-		cooldown = stats.Cooldown,
+		cooldown = stats.Cooldown
 	})
 
 end
@@ -225,7 +225,7 @@ function MainController.initialize()
 	local self = setmetatable({
 		enemies = {},
 		queue = {},
-		towers = {},
+		towers = {}
 	}, MainController)
 
 	Bridge:Connect(function(player, data)
@@ -270,7 +270,7 @@ function MainController:connect()
 			if not position then
 				Bridge:Fire(BridgeNet2.AllPlayers(), {
 					action = "Kill",
-					id = id,
+					id = id
 				})
 
 				IDsCache.clean(id)
@@ -341,13 +341,13 @@ function MainController:connect()
 						Bridge:Fire(BridgeNet2.AllPlayers(), {
 							action = "Attack",
 							id = current_tower.target,
-							health = enemy.stats.Health,
+							health = enemy.stats.Health
 						})
 
 						if enemy.stats.Health <= 0 then
 							Bridge:Fire(BridgeNet2.AllPlayers(), {
 								action = "Kill",
-								id = current_tower.target,
+								id = current_tower.target
 							})
 
 							IDsCache.clean(current_tower.target)
